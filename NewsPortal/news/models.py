@@ -1,15 +1,20 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from django.db import models
-from NewsPortal.resources import TYPES, article
 
 
 class Author(models.Model):
-    user = models.OneToOneField(AbstractUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
 
 
 class Category(models.Model):
     name = models.CharField(max_length=127, unique=True)
+
+
+news = 'NW'
+article = 'AT'
+
+TYPES = [(news, 'Новость'), (article, 'Статья')]
 
 
 class Post(models.Model):
@@ -29,7 +34,7 @@ class PostCategory(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(AbstractUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     time_in = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField(default=0)
