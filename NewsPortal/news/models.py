@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from NewsPortal.res import TYPES, article
+from res import TYPES, article
 
 
 class Author(models.Model):
