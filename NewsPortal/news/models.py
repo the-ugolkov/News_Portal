@@ -31,13 +31,14 @@ class Post(models.Model):
 
     def like(self):
         self.rating += 1
+        self.save()
 
     def dislike(self):
         self.rating -= 1
+        self.save()
 
     def previev(self):
         return self.text[:125] + '...'
-
 
 
 class PostCategory(models.Model):
@@ -54,6 +55,8 @@ class Comment(models.Model):
 
     def like(self):
         self.rating += 1
+        self.save()
 
     def dislike(self):
         self.rating -= 1
+        self.save()
