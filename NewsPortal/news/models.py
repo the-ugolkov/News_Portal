@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from .res import TYPES
+
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -14,15 +16,9 @@ class Category(models.Model):
     name = models.CharField(max_length=127, unique=True)
 
 
-news = 'NW'
-article = 'AT'
-
-TYPES = [(news, 'Новость'), (article, 'Статья')]
-
-
 class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    type = models.CharField(max_length=2, choices=TYPES, default=article)
+    type = models.CharField(max_length=10, choices=TYPES, default='article')
     time_in = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(Category, through='PostCategory')
     title = models.CharField(max_length=255)
