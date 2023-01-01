@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Sum
 
 from .res import TYPES
 
@@ -10,6 +11,12 @@ class Author(models.Model):
 
     def update_rating(self):
         pass
+        # sum_post_rating = (Post.objects.filter(author=self.user).aggregate(sum = Sum('rating')))['sum'] * 3
+        # sum_comments_rat = (Comment.objects.filter(author=self.user).aggregate(sum = Sum('rating')))['sum']
+        # sum_post_com_rat =
+
+        # self.rating = sum_post_rating + sum_comments_rat + sum_post_com_rat
+        # self.save()
 
 
 class Category(models.Model):
