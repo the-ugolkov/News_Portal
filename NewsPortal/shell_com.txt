@@ -1,0 +1,74 @@
+from news.models import *
+
+1) Создать двух пользователей (с помощью метода User.objects.create_user('username')).
+User.objects.create_user('Mike')
+User.objects.create_user('Nick')
+
+
+2) Создать два объекта модели Author, связанные с пользователями.
+Author.objects.create(user=User.objects.get(username='Mike'))
+Author.objects.create(user=User.objects.get(username='Nick'))
+
+
+3) Добавить 4 категории в модель Category.
+Category.objects.create(name='Наука')
+Category.objects.create(name='Спорт')
+Category.objects.create(name='Технологии')
+Category.objects.create(name='Психология')
+
+
+4) Добавить 2 статьи и 1 новость.
+Post.objects.create(author = Author(pk=1), type='article', title='Глава NASA Нельсон заявил, что Китай может заявить права на Луну', text='«Это факт: мы участвуем в космической гонке. И это правда, что нам лучше позаботиться о том, чтобы они [Китай] не добрались до какого-нибудь места на Луне под видом научных исследований. И не исключено, что они скажут: «Не подходите, мы здесь, это наша территория»» — считает Нельсон.')
+Post.objects.create(author = Author(pk=2), type='article', title='Начальник года', text='Миллиардер Илон Маск все последние годы не сходит со страниц прессы. Уходящий год не стал исключением. 14 апреля 2022 года бизнесмен решил приобрести Twitter. Вскоре совет директоров компании единогласно принял предложение Илона Маска, однако в июле он отказался от покупки в связи с нарушениями нескольких положений соглашения о сделке. Но 26 октября 2022 года Илон Маск все же подтвердил сделку и купил Twitter за $44 млрд. После покупки популярной соцсети Маск обещал «амнистию» заблокированным пользователям, а также «возвращение свободы слова». После этого по решению миллиардера были восстановлены аккаунты Дональда Трампа и Канье Уэста.')
+Post.objects.create(author = Author(pk=1), type='news', title='НХЛ признала Овечкина первой звездой декабря', text='Российский нападающий «Вашингтон Кэпиталз» Александр Овечкин признан первой звездой декабря в Национальной хоккейной лиге. Об этом сообщает пресс-служба НХЛ. В минувшем месяце Александр провел 15 матчей и забросил в них 13 шайб. Также на его счету 9 результативных передач в этих играх. Самые же яркие достижения Овечкина в декабре — 800-я шайба за карьеру в НХЛ, а следом — и 802-я, которая позволила ему обойти Горди Хоу в списке лучших снайперов в истории лиги и устремиться в погоню за «вечным» рекордом Уэйна Гретцки (894 шайбы).')
+
+5) Присвоить им категории (как минимум в одной статье/новости должно быть не меньше 2 категорий).
+PostCategory.objects.create(post = Post.objects.get(pk=1), category = Category.objects.get(name='Наука'))
+PostCategory.objects.create(post = Post.objects.get(pk=1), category = Category.objects.get(name='Технологии'))
+PostCategory.objects.create(post = Post.objects.get(pk=2), category = Category.objects.get(pk=3))
+PostCategory.objects.create(post = Post.objects.get(pk=3), category = Category.objects.get(name='Спорт'))
+
+
+6) Создать как минимум 4 комментария к разным объектам модели Post (в каждом объекте должен быть как минимум один комментарий).
+Comment.objects.create(post=Post.objects.get(pk=1), user=User.objects.get(username='Nick'), text='Надо бы на земле разобраться, а потом на луну лезть')
+Comment.objects.create(post=Post.objects.get(pk=2), user=User.objects.get(username='Mike'), text='Хоть где то будет свобода слова)')
+Comment.objects.create(post=Post.objects.get(pk=2), user=User.objects.get(username='Nick'), text='Время покажет!')
+Comment.objects.create(post=Post.objects.get(pk=3), user=User.objects.get(username='Nick'), text='Овечкин - лучший!!!')
+
+
+7) Применяя функции like() и dislike() к статьям/новостям и комментариям, скорректировать рейтинги этих объектов.
+Comment.objects.get(pk=1).like()
+Comment.objects.get(pk=1).like()
+Comment.objects.get(pk=2).like()
+Comment.objects.get(pk=3).dislike()
+Comment.objects.get(pk=4).dislike()
+Comment.objects.get(pk=1).like()
+Post.objects.get(pk=1).like()
+Post.objects.get(pk=1).like()
+Post.objects.get(pk=1).like()
+Post.objects.get(pk=2).dislike()
+Post.objects.get(pk=2).like()
+Post.objects.get(pk=3).dislike()
+Post.objects.get(pk=3).dislike()
+Post.objects.get(pk=3).like()
+Post.objects.get(pk=3).like()
+Post.objects.get(pk=3).like()
+
+
+8) Обновить рейтинги пользователей.
+Author.objects.get(pk=1).update_rating()
+Author.objects.get(pk=2).update_rating()
+
+
+9) Вывести username и рейтинг лучшего пользователя (применяя сортировку и возвращая поля первого объекта).
+Author.objects.all().order_by('-rating').values('user__username', 'rating')[0].values()
+#Не придумал другого способа в одну строку вывести оба значения
+
+
+10) Вывести дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи, основываясь на лайках/дислайках к этой статье.
+Post.objects.all().order_by('-rating').values('time_in', 'author__user__username', 'rating', 'title')[0]
+Post.objects.all().order_by('-rating')[0].previev()
+#А тут просто не нашел решения в одну строку
+
+11) Вывести все комментарии (дата, пользователь, рейтинг, текст) к этой статье.
+Comment.objects.filter(post=Post.objects.all().order_by('-rating')[0]).values('time_in', 'user__username', 'rating', 'text')

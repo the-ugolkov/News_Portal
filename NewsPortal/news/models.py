@@ -10,13 +10,11 @@ class Author(models.Model):
     rating = models.IntegerField(default=0)
 
     def update_rating(self):
-        pass
-        # sum_post_rating = (Post.objects.filter(author=self.user).aggregate(sum = Sum('rating')))['sum'] * 3
-        # sum_comments_rat = (Comment.objects.filter(author=self.user).aggregate(sum = Sum('rating')))['sum']
-        # sum_post_com_rat =
-
-        # self.rating = sum_post_rating + sum_comments_rat + sum_post_com_rat
-        # self.save()
+        post = (Post.objects.filter(author=Author.objects.get(user=self.user)).aggregate(sum=Sum('rating')))['sum']*3
+        comment = (Comment.objects.filter(user=self.user).aggregate(Sum('rating')))['rating__sum']
+        com_post = (Post.objects.filter(author=Author.objects.get(user=self.user)).aggregate(sum=Sum('comment__rating')))['sum']
+        self.rating = post + comment + com_post
+        self.save()
 
 
 class Category(models.Model):
