@@ -40,7 +40,7 @@ class Post(models.Model):
         self.save()
 
     def previev(self):
-        return self.text[:125] + '...'
+        return self.text[:124] + '...'
 
 
 class PostCategory(models.Model):
