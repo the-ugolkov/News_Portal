@@ -12,7 +12,8 @@ class Author(models.Model):
     def update_rating(self):
         post = (Post.objects.filter(author=Author.objects.get(user=self.user)).aggregate(sum=Sum('rating')))['sum']*3
         comment = (Comment.objects.filter(user=self.user).aggregate(Sum('rating')))['rating__sum']
-        com_post = (Post.objects.filter(author=Author.objects.get(user=self.user)).aggregate(sum=Sum('comment__rating')))['sum']
+        com_post = (Post.objects.filter(author=Author.objects.get(user=self.user)).
+                    aggregate(sum=Sum('comment__rating')))['sum']
         self.rating = post + comment + com_post
         self.save()
 
