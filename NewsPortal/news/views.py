@@ -4,14 +4,16 @@ from .models import Post
 
 
 class NewsList(ListView):
-    model = Post
-    ordering = 'time_in'
+    # model = Post
+    queryset = Post.objects.filter(type='news')
+    ordering = '-time_in'
     template_name = 'news.html'
     context_object_name = 'news'
 
 
 class NewDetail(DetailView):
-    model = Post
+    # model = Post
+    queryset = Post.objects.filter(type='news')
     template_name = 'new.html'
     context_object_name = 'new'
 

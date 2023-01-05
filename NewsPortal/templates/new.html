@@ -5,5 +5,8 @@ News
 {% endblock title %}
 
 {% block content %}
-<h1>{{ new }}</h1>
+<h3>{{ new.title }}</h3>
+<h5>{{ new.time_in|date:'j M Y' }}</h5>
+<hr>
+<h5>{{ new.text }}</h5>
 {% endblock content %}

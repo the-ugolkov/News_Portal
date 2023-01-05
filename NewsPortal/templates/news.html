@@ -5,5 +5,15 @@ News
 {% endblock title %}
 
 {% block content %}
-<h1>{{ news }}</h1>
+    <h2>Количество новостей: {{ news|length }}</h2>
+    <hr>
+    {% if news %}
+        {% for new in news %}
+            <h3>{{ new.title }}</h3>
+            <h5>{{ new.time_in|date:'j M Y' }}</h5>
+            <h5>{{ new.text|truncatechars:20 }}</h5>
+        {% endfor %}
+    {% else %}
+        <h4>Новостей нет!</h4>
+    {% endif %}
 {% endblock content %}
