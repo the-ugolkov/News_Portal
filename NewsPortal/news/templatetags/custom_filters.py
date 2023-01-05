@@ -11,7 +11,7 @@ class CensorException(Exception):
 
 @register.filter()
 def censor(text):
-    non_cens = ['добавить', 'дату', 'новость', 'все', 'user']
+    non_cens = ['редиска', 'овечкин', 'новость', 'это', 'что', 'год']
     try:
         if not isinstance(text, str):
             raise CensorException('Error')
