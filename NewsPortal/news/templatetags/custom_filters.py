@@ -7,7 +7,7 @@ register = template.Library()
 
 @register.filter()
 def censor(text):
-    non_cens = ['редиска', 'овечкин', 'новость', 'стрем']
+    non_cens = ['редиска', 'овечкин', 'новость', 'это', 'что', 'год']
     for word in non_cens:
         text = re.sub(word, word[0] + '*' * (len(word) - 1), text)
         title_word = word.title()
