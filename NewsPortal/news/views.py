@@ -8,6 +8,7 @@ class NewsList(ListView):
     ordering = '-time_in'
     template_name = 'news.html'
     context_object_name = 'news'
+    paginate_by = 2
 
 
 class NewDetail(DetailView):
