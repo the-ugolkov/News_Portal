@@ -11,6 +11,14 @@ class NewsList(ListView):
     context_object_name = 'news'
     paginate_by = 10
 
+
+class SearchList(ListView):
+    model = Post
+    ordering = '-time_in'
+    template_name = 'news_search.html'
+    context_object_name = 'news'
+    paginate_by = 10
+
     def get_queryset(self):
         queryset = super().get_queryset()
         self.filterset = PostFilter(self.request.GET, queryset)

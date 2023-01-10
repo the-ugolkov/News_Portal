@@ -9,6 +9,11 @@ News
 {% block content %}
     <h2>Новостей: {{ news|length }}</h2>
     <hr>
+    <form action="" method="get">
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+    </form>
+    <hr>
     {% if news %}
         {% for new in news %}
             <h3>{{ new.title|censor }}</h3>
