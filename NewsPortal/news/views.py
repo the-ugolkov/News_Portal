@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
+
+from .forms import PostForm
 from .models import Post
 from .filters import PostFilter
 
@@ -34,5 +36,9 @@ class NewDetail(DetailView):
     model = Post
     template_name = 'new.html'
     context_object_name = 'new'
+
+def create_post(request):
+    form = PostForm()
+    return render(request, 'post_create.html', {'form':form})
 
 # Create your views here.
