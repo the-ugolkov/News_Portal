@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from .forms import PostForm
 from .models import Post
@@ -39,6 +39,12 @@ class NewDetail(DetailView):
 
 
 class PostCreate(CreateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'post_create.html'
+
+
+class PostUpdate(UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'post_create.html'
