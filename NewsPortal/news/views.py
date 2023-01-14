@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
 from .forms import PostForm
 from .models import Post
@@ -37,8 +37,10 @@ class NewDetail(DetailView):
     template_name = 'new.html'
     context_object_name = 'new'
 
-def create_post(request):
-    form = PostForm()
-    return render(request, 'post_create.html', {'form':form})
+
+class PostCreate(CreateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'post_create.html'
 
 # Create your views here.
