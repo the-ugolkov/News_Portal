@@ -1,13 +1,9 @@
 from django import forms
 
-from .models import Post, Category
+from .models import Post
 
 
 class PostForm(forms.ModelForm):
-    category = forms.ModelChoiceField(
-        queryset=Category.objects.all(),
-    )
-
     class Meta:
         model = Post
-        fields = ['author', 'title', 'text']
+        fields = ['category', 'author', 'title', 'text']

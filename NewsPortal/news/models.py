@@ -18,6 +18,9 @@ class Author(models.Model):
         self.rating = post + comment + com_post
         self.save()
 
+    def __str__(self):
+        return f'{self.user}'
+
 
 class Category(models.Model):
     name = models.CharField(max_length=127, unique=True)
