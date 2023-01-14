@@ -16,6 +16,7 @@ class PostFilter(FilterSet):
         model = Post
         fields = {
             'title': ['icontains'],
+            # 'type': ['exact'],
             # 'author__user': ['exact'],
             # 'time_in': ['gt'],
         }

@@ -44,6 +44,16 @@ class PostCreate(CreateView):
     model = Post
     template_name = 'post_create.html'
 
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        if self.request.method == 'POST':
+            path_info = self.request.META['PATH_INFO']
+            if path_info == '/news/create/':
+                post.post_type = 'news'
+            elif path_info == '/articles/create/':
+                post.post_type = 'article'
+        return super().form_valid(form)
+
 
 class PostUpdate(UpdateView):
     form_class = PostForm
