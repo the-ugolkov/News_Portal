@@ -11,4 +11,6 @@ News
 <h5>{{ new.time_in|date:'j M Y' }}</h5>
 <hr>
 <h5>{{ new.text|censor }}</h5>
+<hr>
+<a class="nav-link" href="/news/{{new.id}}/edit">Изменить</a>
 {% endblock content %}

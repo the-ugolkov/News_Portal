@@ -17,8 +17,8 @@ News
     <hr>
     {% if news %}
         {% for new in news %}
-            <h3>{{ new.title|censor }}</h3>
-            <h5>{{ new.time_in|date:'j M Y' }}</h5>
+            <a class="nav-link" href="/news/{{new.id}}"><h3>{{ new.title|censor }}</h3></a>
+            <time>{{ new.time_in|date:'j M Y' }}</time>
             <h5>{{ new.text|censor|truncatechars:20 }}</h5>
         {% endfor %}
     {% else %}
