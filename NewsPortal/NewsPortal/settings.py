@@ -39,12 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'django_filters',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'news',
-    'django_filters',
     'allauth.socialaccount.providers.google',
+    'news',
+    'protect',
 ]
 
 SITE_ID = 1
@@ -144,7 +145,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/news/search/'
+LOGIN_REDIRECT_URL = '/news/'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
