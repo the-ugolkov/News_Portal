@@ -15,6 +15,13 @@ News
     {% if news %}
         {% for new in news %}
             <a class="nav-link" href="/news/{{new.id}}"><h3>{{ new.title|censor }}</h3></a>
+            {% if new.category.all %}
+                <h5>Категории:
+                    {% for category in new.category.all %}
+                        <a href="{% url 'category_list' category.id %}">{{category}}</a>
+                    {% endfor %}
+                </h5>
+            {% endif %}
             <time>{{ new.time_in|date:'j M Y' }}</time>
             <h5>{{ new.text|censor|truncatechars:20 }}</h5>
         {% endfor %}
