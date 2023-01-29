@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.forms import DateInput
 from django_filters import FilterSet, ModelChoiceFilter, DateFilter
 from .models import Post, Author
@@ -6,7 +7,7 @@ from .models import Post, Author
 class PostFilter(FilterSet):
     author__user = ModelChoiceFilter(
         field_name='author__user',
-        queryset=Author.objects.all(),
+        queryset=User.objects.all(),
         label='Author',
         empty_label='All'
     )
@@ -16,7 +17,4 @@ class PostFilter(FilterSet):
         model = Post
         fields = {
             'title': ['icontains'],
-            # 'type': ['exact'],
-            # 'author__user': ['exact'],
-            # 'time_in': ['gt'],
         }
