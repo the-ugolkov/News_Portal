@@ -1,6 +1,8 @@
 from allauth.account.forms import SignupForm
 from django import forms
 from django.contrib.auth.models import Group
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 from .models import Post
 
