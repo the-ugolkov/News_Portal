@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'news.apps.NewsConfig',
     'protect',
+    'django_apscheduler',
 ]
 
 SITE_ID = 1
@@ -155,9 +156,12 @@ ACCOUNT_FORMS = {'signup': 'news.forms.BasicSignupForm'}
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'testmikepy'
+EMAIL_HOST_PASSWORD = 'ehtyhsmzyobcnvvq'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.ru'
 EMAIL_USE_SSL = True
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25
 
 SITE_URL = 'http://127.0.0.1:8000'
