@@ -3,7 +3,6 @@ from django import forms
 from django.contrib.auth.models import Group
 
 from .models import Post
-from ..NewsPortal import settings
 
 
 class PostForm(forms.ModelForm):
