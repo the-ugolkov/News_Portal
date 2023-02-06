@@ -1,7 +1,7 @@
 import os
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mcdonalds.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'NewsPortal.settings')
 
 app = Celery('mcdonalds')
 app.config_from_object('django.conf:settings', namespace='CELERY')
