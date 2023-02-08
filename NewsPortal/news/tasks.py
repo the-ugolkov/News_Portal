@@ -49,10 +49,16 @@ from .models import Category, Post
 #     msg.send()
 
 @shared_task
-def send_message(post):
-    email_list = []
-    subscribes = User.categories.all()
-    email_list += [s.email for s in subscribes]
+def send_message():
+    post = Post
+    # emails = User.objects.filter(categories__id__in=post.category.primary_key).values('email').distinct()
+    # emails_list = [item['email'] for item in emails]
+    # categories =
+    # subscribes_emails = []
+
+    # for cat in categories:
+    #     subscribes = cat.subscribers.all()
+    #     subscribes_emails += [s.email for s in subscribes]
     html_content = render_to_string(
         'post_created_email.html',
         {
@@ -65,7 +71,7 @@ def send_message(post):
         subject=post.title,
         body='',
         from_email=settings.DEFAULT_FROM_EMAIL,
-        to=email_list,
+        to=subscribes_emails,
     )
 
     msg.attach_alternative(html_content, 'text/html')
