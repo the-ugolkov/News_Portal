@@ -7,6 +7,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .forms import PostForm
 from .models import Post, Category
 from .filters import PostFilter
+from .tasks import send_message
 
 
 class NewsList(ListView):
@@ -55,6 +56,7 @@ class PostCreate(PermissionRequiredMixin, CreateView):
                 post.post_type = 'news'
             elif path_info == '/articles/create/':
                 post.post_type = 'article'
+        send_message.apply_async(post)
         return super().form_valid(form)
 
 
@@ -69,7 +71,6 @@ class PostDelete(DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('post_list')
-# Create your views here.
 
 
 class CategoryList(ListView):
