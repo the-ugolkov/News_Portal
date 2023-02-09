@@ -1,78 +1,31 @@
 from celery import shared_task
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
-from .models import Category, Post
+from .models import Post
 
-
-# @shared_task
-# def send_message():
-#     post = Post
-#     html_content = render_to_string(
-#         'post_created_email.html',
-#         {
-#             'post': post,
-#             'text': post.text,
-#             'link': f'{settings.SITE_URL}/news/{post.pk}',
-#         }
-#     )
-#
-#     msg = EmailMultiAlternatives(
-#         subject=f'{post.title}',
-#         body='',
-#         from_email=settings.DEFAULT_FROM_EMAIL,
-#         to=Category.subscribers,
-#     )
-#
-#     msg.attach_alternative(html_content, 'text/html')
-#     msg.send()
-
-# @shared_task
-# def send_message(pk_, id_cat):
-#     post = Post.objects.get(id=pk_)
-#     emails = User.objects.filter(categories__id__in=id_cat).values('email').distinct()
-#     emails_list = [item['email'] for item in emails]
-#     html_content = render_to_string(
-#         'email_create.html',
-#         {
-#             'Post': post
-#         }
-#     )
-#     msg = EmailMultiAlternatives(
-#         subject=f'{post.header}',
-#         from_email=settings.DEFAULT_FROM_EMAIL,
-#         to=emails_list
-#     )
-#     msg.attach_alternative(html_content, 'text/html')
-#     msg.send()
 
 @shared_task
-def send_message():
-    post = Post
-    # emails = User.objects.filter(categories__id__in=post.category.primary_key).values('email').distinct()
-    # emails_list = [item['email'] for item in emails]
-    # categories =
-    # subscribes_emails = []
+def send_message(oid):
+    post = Post.objects.get(pk=oid)
+    categories = post.category.all()
+    for item in categories:
+        for s in item.subscribers.all():
+            html_content = render_to_string(
+                'post_created_email.html',
+                {
+                    'text': post.text,
+                    'link': f'{settings.SITE_URL}/news/{post.pk}',
+                }
+            )
 
-    # for cat in categories:
-    #     subscribes = cat.subscribers.all()
-    #     subscribes_emails += [s.email for s in subscribes]
-    html_content = render_to_string(
-        'post_created_email.html',
-        {
-            'text': post.text,
-            'link': f'{settings.SITE_URL}/news/{post.pk}',
-        }
-    )
+            msg = EmailMultiAlternatives(
+                subject=post.title,
+                body='',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[s.email],
+            )
 
-    msg = EmailMultiAlternatives(
-        subject=post.title,
-        body='',
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        to=subscribes_emails,
-    )
-
-    msg.attach_alternative(html_content, 'text/html')
-    msg.send()
+            msg.attach_alternative(html_content, 'text/html')
+            msg.send()

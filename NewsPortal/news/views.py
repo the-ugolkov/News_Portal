@@ -56,7 +56,8 @@ class PostCreate(PermissionRequiredMixin, CreateView):
                 post.post_type = 'news'
             elif path_info == '/articles/create/':
                 post.post_type = 'article'
-        send_message.apply_async()
+        post.save()
+        send_message.apply_async([post.pk], countdown=5)
         return super().form_valid(form)
 
 
