@@ -195,7 +195,6 @@ LOGGING = {
         'simple_error': {
             'format': '%(exc_info)s'
         },
-
         'verbose': {
             'format': '%(asctime)s %(levelname)s %(module)s %(message)s',
             'datefmt': "%d/%b/%Y %H:%M:%S"
