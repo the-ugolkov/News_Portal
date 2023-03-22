@@ -8,7 +8,7 @@ News
 
 {% block content %}
 <h3>{{ new.title|censor }}</h3>
-<h5>{{ new.time_in|date:'j M Y' }}</h5>
+<h5>{{ new.time_in|date:'j M Y' }} | Author:{{ new.author }}</h5>
 {% if new.category.all %}
     <hr>
     <h8>Категории:

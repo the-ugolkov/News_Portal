@@ -11,7 +11,11 @@ class PostFilter(FilterSet):
         label='Author',
         empty_label='All'
     )
-    time_in = DateFilter(lookup_expr='gt', widget=DateInput(attrs={'type': 'date'}), label='Date')
+    time_in = DateFilter(
+        lookup_expr='gt',
+        widget=DateInput(attrs={'type': 'date'}),
+        label='Date'
+    )
 
     class Meta:
         model = Post
